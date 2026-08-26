@@ -10,8 +10,9 @@
     "check": "astro check"
   },
   "dependencies": {
-    "astro": "^5.13.2",
     "@astrojs/rss": "^4.0.12",
-    "@astrojs/sitemap": "^3.5.1"
+    "@astrojs/sitemap": "^3.5.1",
+    "astro": "^5.13.2",
+    "unist-util-visit": "^5.1.0"
   }
 }

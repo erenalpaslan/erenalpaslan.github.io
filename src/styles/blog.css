@@ -230,6 +230,49 @@ a:focus-visible {
   --astro-code-token-link: var(--color-accent-300);
 }
 
+/* Tables. The approved design had no table in it — the comparison article
+ * brought the first one. Rather than invent a second look, this adopts
+ * Nocturne's own .table rules verbatim (nocturne.css:326-355), including the
+ * row-level fading rule, and adds only what a prose table needs: a scroll
+ * container so a wide table never widens the page. Worth a design pass if
+ * tables become common. */
+.body .table-scroll { overflow-x: auto; margin: 0 0 calc(var(--space-8) * 1.2); }
+.body table {
+  width: 100%; border-collapse: collapse; font-size: 14px;
+  margin: 0 0 calc(var(--space-8) * 1.2); min-width: 34ch;
+}
+.body th {
+  text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  padding: var(--space-3); border-bottom: 1px solid transparent;
+  white-space: nowrap;
+}
+.body td {
+  padding: var(--space-3); border-bottom: 1px solid transparent;
+  color: var(--color-neutral-300); line-height: 1.6; vertical-align: top;
+}
+.body thead tr {
+  background: linear-gradient(to right,
+    transparent, var(--color-divider) 48px,
+    var(--color-divider) calc(100% - 48px), transparent) no-repeat bottom / 100% 1px;
+}
+.body tbody tr {
+  background: linear-gradient(to right,
+    transparent, color-mix(in srgb, var(--color-text) 8%, transparent) 48px,
+    color-mix(in srgb, var(--color-text) 8%, transparent) calc(100% - 48px), transparent) no-repeat bottom / 100% 1px;
+}
+.body tbody tr:hover {
+  background:
+    linear-gradient(color-mix(in srgb, var(--color-text) 4%, transparent),
+                    color-mix(in srgb, var(--color-text) 4%, transparent)) no-repeat 0 0 / 100% 100%,
+    linear-gradient(to right,
+      transparent, color-mix(in srgb, var(--color-text) 8%, transparent) 48px,
+      color-mix(in srgb, var(--color-text) 8%, transparent) calc(100% - 48px), transparent) no-repeat bottom / 100% 1px;
+}
+/* A table is the one thing allowed to exceed the reading measure. */
+.body table { max-width: none; }
+.body .table-scroll table { min-width: max-content; }
+
 .postnav {
   display: flex; align-items: baseline; justify-content: space-between;
   gap: var(--space-8); flex-wrap: wrap; padding: calc(var(--space-8) * 1.6) 0;
