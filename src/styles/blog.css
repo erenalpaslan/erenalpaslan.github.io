@@ -158,7 +158,7 @@ a:focus-visible {
 .pubdot-draft { background: var(--color-neutral-600); }
 .arrow-ne { font-size: 13px; line-height: 1; opacity: 0.85; }
 
-.body { max-width: var(--measure); padding: calc(var(--space-8) * 1.6) 0 0; }
+.body { max-width: none; padding: calc(var(--space-8) * 1.6) 0 0; }
 .body p {
   font-size: var(--t-body); line-height: 1.78; color: var(--color-neutral-200);
   margin: 0 0 calc(var(--space-8) * 1.1); text-wrap: pretty;
