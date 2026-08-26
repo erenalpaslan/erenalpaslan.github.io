@@ -1,0 +1,15 @@
+---
+const links = [
+  { href: "/", label: "Writing" },
+  { href: "/about", label: "About" },
+  { href: "https://github.com/erenalpaslan", label: "GitHub" },
+  { href: "https://medium.com/@erenalpaslan97", label: "Medium" },
+];
+---
+<div class="topbar">
+  <a href="/" class="brand">Eren Alpaslan<span class="brand-mark">.</span></a>
+  <nav class="navlinks">
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+  </nav>
+</div>
+<hr class="rule" />

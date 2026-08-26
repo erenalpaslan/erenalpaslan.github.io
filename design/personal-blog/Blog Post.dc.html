@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="stylesheet" href="nocturne/styles.css" />
+        <style>
+          :root {
+            --t-title: 42px;
+            --t-h2: 26px;
+            --t-h3: 19px;
+            --t-body: 17px;
+            --t-code: 14px;
+            --t-meta: 12.5px;
+            --measure: 68ch;
+            --gutter: clamp(var(--space-8), 6vw, 96px);
+            --flow: calc(var(--space-8) * 1.15);
+          }
+          body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); margin: 0; }
+          a { color: var(--color-accent-300); text-decoration: none; border-bottom: 1px solid var(--color-accent-800); }
+          a:hover { color: var(--color-accent-200); border-bottom-color: var(--color-accent-600); }
+          a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+          .shell { max-width: 1180px; padding: 0 var(--gutter); margin: 0 auto; }
+          .rule { height: 1px; border: 0; margin: 0;
+            background: linear-gradient(90deg, transparent 0, var(--color-divider) 48px,
+              var(--color-divider) calc(100% - 48px), transparent 100%); }
+
+          .topbar { display: flex; align-items: baseline; justify-content: space-between;
+            gap: var(--space-8); padding: calc(var(--space-8) * 1.6) 0 calc(var(--space-8) * 1.2); flex-wrap: wrap; }
+          .brand { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+            font-size: 19px; letter-spacing: -0.01em; color: var(--color-text); border: 0; }
+          .brand-mark { color: var(--color-accent); }
+          .navlinks { display: flex; gap: calc(var(--space-8) * 1.1); font-size: var(--t-meta);
+            letter-spacing: 0.08em; text-transform: uppercase; }
+          .navlinks a { color: var(--color-neutral-500); border: 0; }
+          .navlinks a:hover { color: var(--color-accent-300); }
+
+          .article { max-width: var(--measure); }
+          .wide { max-width: calc(var(--measure) + 12ch); }
+
+          .kicker { display: flex; align-items: center; gap: var(--space-4);
+            font-size: var(--t-meta); color: var(--color-neutral-600);
+            margin: calc(var(--space-8) * 2.2) 0 var(--space-6); }
+          .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-neutral-700); }
+          h1.title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+            font-size: var(--t-title); line-height: 1.18; letter-spacing: -0.022em;
+            margin: 0 0 var(--space-6); max-width: 22ch; }
+          .taglist { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-8); }
+
+          .mirror-note { display: flex; gap: var(--space-4); align-items: flex-start;
+            border-left: 2px solid var(--color-accent-700); padding: var(--space-3) 0 var(--space-3) var(--space-6);
+            font-size: var(--t-meta); line-height: 1.6; color: var(--color-neutral-500);
+            margin-bottom: calc(var(--space-8) * 1.8); }
+
+          p.body { font-size: var(--t-body); line-height: 1.75; color: var(--color-neutral-300);
+            margin: 0 0 var(--flow); text-wrap: pretty; }
+          h2 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+            font-size: var(--t-h2); line-height: 1.3; letter-spacing: -0.015em;
+            margin: calc(var(--space-8) * 1.9) 0 var(--space-6); }
+          h3 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+            font-size: var(--t-h3); line-height: 1.4; color: var(--color-neutral-200);
+            margin: calc(var(--space-8) * 1.4) 0 var(--space-4); }
+
+          blockquote { margin: calc(var(--space-8) * 1.5) 0; padding-left: calc(var(--space-8) * 1.1);
+            border-left: 2px solid var(--color-accent); font-size: 19px; line-height: 1.6;
+            color: var(--color-neutral-200); font-style: normal; }
+          blockquote cite { display: block; margin-top: var(--space-4); font-size: var(--t-meta);
+            font-style: normal; color: var(--color-neutral-600); }
+
+          code.inline { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.9em; color: var(--color-accent-300);
+            background: var(--color-accent-900); padding: 1px var(--space-2); border-radius: var(--radius-sm); }
+
+          /* Code sits on a surface one step off the ground, edged rather than
+             boxed. Monochrome from the neutral ramp: the real site highlights
+             with Shiki at build time, and this system keeps chroma low
+             outside the accent anyway. */
+          .code { background: var(--color-neutral-900); border: 1px solid var(--color-neutral-800);
+            border-radius: var(--radius-md); margin: calc(var(--space-8) * 1.3) 0; overflow: hidden; }
+          .code-head { display: flex; align-items: center; justify-content: space-between;
+            padding: var(--space-3) var(--space-6); border-bottom: 1px solid var(--color-neutral-800);
+            font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-neutral-600); }
+          .code pre { margin: 0; padding: var(--space-6) calc(var(--space-8) * 0.9);
+            overflow-x: auto; white-space: pre;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: var(--t-code); line-height: 1.7; color: var(--color-neutral-300); }
+
+          figure { margin: calc(var(--space-8) * 1.5) 0; }
+          figure .frame { border: 1px solid var(--color-neutral-800); border-radius: var(--radius-md);
+            background: var(--color-neutral-900); height: 260px;
+            background-image: repeating-linear-gradient(135deg, transparent 0 10px, rgba(147,151,171,0.05) 10px 20px);
+            display: flex; align-items: center; justify-content: center; }
+          figure .frame span { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: var(--t-meta); color: var(--color-neutral-600); }
+          figcaption { font-size: var(--t-meta); color: var(--color-neutral-600); margin-top: var(--space-4); }
+
+          .pager { display: flex; justify-content: space-between; gap: var(--space-8);
+            padding: calc(var(--space-8) * 1.4) 0; flex-wrap: wrap; }
+          .pager-item { max-width: 30ch; }
+          .pager-item.next { text-align: right; margin-left: auto; }
+          .pager-label { font-size: var(--t-meta); letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--color-neutral-600); margin-bottom: var(--space-3); }
+          .pager-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+            font-size: 17px; line-height: 1.35; color: var(--color-text); border: 0; }
+          .pager-title:hover { color: var(--color-accent-300); }
+
+          .foot { display: flex; align-items: center; justify-content: space-between;
+            gap: var(--space-8); flex-wrap: wrap;
+            padding: calc(var(--space-8) * 1.4) 0 calc(var(--space-8) * 2);
+            font-size: var(--t-meta); color: var(--color-neutral-600); }
+        </style>
+      </helmet>
+
+      <div data-screen-label="Blog post" style="min-height:100vh;background:var(--color-bg)">
+        <div class="shell">
+
+          <div class="topbar">
+            <a href="/" class="brand">Eren Alpaslan<span class="brand-mark">.</span></a>
+            <nav class="navlinks">
+              <a href="/">Writing</a>
+              <a href="/about">About</a>
+              <a href="https://github.com/erenalpaslan">GitHub</a>
+              <a href="https://medium.com/@erenalpaslan97">Medium</a>
+            </nav>
+          </div>
+          <hr class="rule" />
+
+          <article class="article">
+            <div class="kicker">
+              <span>6 Nov 2023</span><span class="dot"></span><span>6 min read</span>
+            </div>
+            <h1 class="title">Kotlin Coroutine: Exception Handling</h1>
+            <div class="taglist">
+              <span class="tag tag-outline">kotlin</span>
+              <span class="tag tag-outline">coroutines</span>
+              <span class="tag tag-outline">android</span>
+            </div>
+
+            <div class="mirror-note">
+              <span>Published here first. A copy also lives on <a href="https://medium.com/appcent/kotlin-coroutine-exception-handling-59be4e073d34">Medium</a> — this page is the canonical one.</span>
+            </div>
+
+            <p class="body">In the world of developers, we dedicate ourselves to perfecting our application processes to provide a proper user experience. It is not just about making things work; it is also about handling issues gracefully when they arise.</p>
+
+            <blockquote>
+              Errors should never pass silently. Unless explicitly silenced.
+              <cite>The Zen of Python — Tim Peters</cite>
+            </blockquote>
+
+            <h2>The concept of a Job</h2>
+            <p class="body">Creating a coroutine with the builders <code class="inline">launch</code> and <code class="inline">async</code> returns an instance of <code class="inline">Job</code>. A Job is a cancellable thing holding a lifecycle, and it can be arranged into <strong>parent–child</strong> hierarchies — so you can combine Jobs and keep control over the lifecycle of the coroutine.</p>
+
+            <h3>Job states</h3>
+            <figure class="wide">
+              <div class="frame"><span>figure — job life-cycle diagram</span></div>
+              <figcaption>Job life-cycle</figcaption>
+            </figure>
+
+            <p class="body">We have no access to the states directly, but there are related properties: <code class="inline">isActive</code>, <code class="inline">isCompleted</code> and <code class="inline">isCancelled</code>. When all children have completed their work, the parent moves to completed.</p>
+
+            <div class="code wide">
+              <div class="code-head"><span>Kotlin</span><span>Cancelling a parent</span></div>
+              <pre>{{ code }}</pre>
+            </div>
+
+            <p class="body">In a parent–child hierarchy, cancelling the parent recursively cancels all children. An exception in a child other than <code class="inline">CancellationException</code> propagates upward and cancels the parent and its remaining children — which is usually not what you want from one failing request.</p>
+
+            <h2>SupervisorJob</h2>
+            <p class="body">A <code class="inline">SupervisorJob</code> changes that rule in one direction only: a failing child no longer takes down its siblings, while cancelling the parent still cancels everything beneath it.</p>
+          </article>
+
+          <hr class="rule" />
+          <div class="pager">
+            <div class="pager-item">
+              <div class="pager-label">Previous</div>
+              <a href="#" class="pager-title">Kotlin Multiplatform: A Guide to Ktor Integration</a>
+            </div>
+            <div class="pager-item next">
+              <div class="pager-label">Next</div>
+              <a href="#" class="pager-title">Image Segmentation in Android</a>
+            </div>
+          </div>
+          <hr class="rule" />
+
+          <div class="foot">
+            <span>© 2026 Eren Alpaslan</span>
+            <nav class="navlinks">
+              <a href="/">All writing</a>
+              <a href="https://github.com/erenalpaslan">GitHub</a>
+              <a href="/rss.xml">RSS</a>
+            </nav>
+          </div>
+
+        </div>
+      </div>
+
+      <script
+        type="text/x-dc"
+        data-dc-script
+        data-props='{}'
+      >
+        class Component extends DCLogic {
+          renderVals() {
+            return {
+              code: [
+                "// cancelling the parent cancels every child, recursively",
+                "runBlocking {",
+                "    val parent = launch {",
+                "        launch { delay(1000); println(\"first child\") }",
+                "        launch { delay(1000); println(\"second child\") }",
+                "    }",
+                "    delay(100)",
+                "    parent.cancel()",
+                "    println(\"isCancelled = \" + parent.isCancelled)",
+                "}"
+              ].join("\n")
+            };
+          }
+        }
+      </script>
+    </x-dc>
+  </body>
+</html>

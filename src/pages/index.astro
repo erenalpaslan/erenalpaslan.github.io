@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { readingTime, formatDate, byNewest } from "../lib/post";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(byNewest);
+---
+<Base
+  title="Eren Alpaslan"
+  description="Notes on Android, Kotlin and the tools around them."
+>
+  <div class="shell">
+    <Header />
+
+    <h1 class="lead">Notes on Android, Kotlin and the tools around them.</h1>
+    <p class="sub">
+      Mobile engineer. I write when something takes me longer to work out than
+      it should have &mdash; coroutines, multiplatform, on-device ML.
+    </p>
+
+    <div class="listhead">
+      <span>Writing</span>
+      <span>{posts.length} {posts.length === 1 ? "post" : "posts"}</span>
+    </div>
+    <hr class="rule" />
+
+    {posts.map((post) => (
+      <div>
+        <a href={`/writing/${post.id}/`} class="entry">
+          <div class="entry-meta">
+            <span>{formatDate(post.data.pubDate)}</span>
+            <span class="dot"></span>
+            <span>{readingTime(post.body)}</span>
+          </div>
+          <h2 class="entry-title">{post.data.title}</h2>
+          <p class="entry-desc">{post.data.description}</p>
+          <div class="entry-foot">
+            <div class="taglist">
+              {post.data.tags.slice(0, 3).map((tag) => (
+                <span class="tag tag-outline">{tag}</span>
+              ))}
+            </div>
+            {post.data.mediumUrl ? (
+              <span class="mirror"><span class="mirror-line"></span>also on Medium</span>
+            ) : (
+              <span class="mirror mirror-draft"><span class="mirror-line"></span>here only</span>
+            )}
+          </div>
+        </a>
+        <hr class="rule" />
+      </div>
+    ))}
+
+    <Footer />
+  </div>
+</Base>

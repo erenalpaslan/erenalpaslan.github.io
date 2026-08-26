@@ -1,0 +1,31 @@
+---
+import "../styles/nocturne.css";
+import "../styles/blog.css";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Absolute canonical for a mirrored post; defaults to this page. */
+  canonical?: string;
+}
+const { title, description, canonical } = Astro.props;
+const href = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={href} />
+    <link rel="alternate" type="application/rss+xml" title="Eren Alpaslan" href="/rss.xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

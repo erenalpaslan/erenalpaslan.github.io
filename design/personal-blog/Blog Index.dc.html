@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="stylesheet" href="nocturne/styles.css" />
+        <style>
+          /* Type scale. Nocturne tokenises space, radius and family but not
+             size, so the reading scale is defined here — and only here. */
+          :root {
+            --t-display: 40px;
+            --t-entry: 25px;
+            --t-lead: 19px;
+            --t-body: 16.5px;
+            --t-meta: 12.5px;
+            --measure: 68ch;
+            --gutter: clamp(var(--space-8), 6vw, 96px);
+          }
+          body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); margin: 0; }
+          a { color: var(--color-text); text-decoration: none; }
+          a:hover { color: var(--color-accent-300); }
+          a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+          /* The page hugs the left and leaves the air on the right. */
+          .shell { max-width: 1180px; padding: 0 var(--gutter); margin: 0 auto; }
+          .col { max-width: var(--measure); }
+
+          /* Nocturne's signature rule: fades out over 48px at each end. */
+          .rule { height: 1px; border: 0; margin: 0;
+            background: linear-gradient(90deg, transparent 0, var(--color-divider) 48px,
+              var(--color-divider) calc(100% - 48px), transparent 100%); }
+
+          .topbar { display: flex; align-items: baseline; justify-content: space-between;
+            gap: var(--space-8); padding: calc(var(--space-8) * 1.6) 0 calc(var(--space-8) * 1.2); flex-wrap: wrap; }
+          .brand { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+            font-size: var(--t-lead); letter-spacing: -0.01em; }
+          .brand-mark { color: var(--color-accent); }
+          .navlinks { display: flex; gap: calc(var(--space-8) * 1.1); font-size: var(--t-meta);
+            letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-neutral-500); }
+          .navlinks a:hover { color: var(--color-accent-300); }
+
+          .lead { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+            font-size: var(--t-display); line-height: 1.22; letter-spacing: -0.02em;
+            margin: calc(var(--space-8) * 2.6) 0 var(--space-8); max-width: 20ch; }
+          .sub { font-size: var(--t-lead); line-height: 1.62; color: var(--color-neutral-400);
+            max-width: 54ch; margin: 0 0 calc(var(--space-8) * 2.4); }
+
+          .listhead { display: flex; align-items: baseline; justify-content: space-between;
+            font-size: var(--t-meta); letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--color-neutral-600); padding-bottom: var(--space-6); }
+
+          .entry { display: block; padding: calc(var(--space-8) * 1.5) 0; }
+          .entry-meta { display: flex; align-items: center; gap: var(--space-4);
+            font-size: var(--t-meta); color: var(--color-neutral-600); margin-bottom: var(--space-4); }
+          .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-neutral-700); }
+          .entry-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+            font-size: var(--t-entry); line-height: 1.3; letter-spacing: -0.015em;
+            margin: 0 0 var(--space-4); transition: color 120ms ease; }
+          .entry:hover .entry-title { color: var(--color-accent-300); }
+          .entry-desc { font-size: var(--t-body); line-height: 1.68; color: var(--color-neutral-400);
+            max-width: var(--measure); margin: 0 0 var(--space-6); }
+          .entry-foot { display: flex; align-items: center; justify-content: space-between;
+            gap: var(--space-6); flex-wrap: wrap; }
+          .taglist { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+          /* The Medium mirror: a mark, not a badge. */
+          .mirror { display: inline-flex; align-items: center; gap: var(--space-2);
+            font-size: var(--t-meta); color: var(--color-neutral-600); }
+          .mirror-line { width: 14px; height: 1px; background: var(--color-accent-700); }
+          .entry:hover .mirror { color: var(--color-neutral-500); }
+
+          .foot { display: flex; align-items: center; justify-content: space-between;
+            gap: var(--space-8); flex-wrap: wrap;
+            padding: calc(var(--space-8) * 1.6) 0 calc(var(--space-8) * 2);
+            font-size: var(--t-meta); color: var(--color-neutral-600); }
+          .foot a:hover { color: var(--color-accent-300); }
+        </style>
+      </helmet>
+
+      <div data-screen-label="Blog index" style="min-height:100vh;background:var(--color-bg)">
+        <div class="shell">
+
+          <div class="topbar">
+            <a href="/" class="brand">Eren Alpaslan<span class="brand-mark">.</span></a>
+            <nav class="navlinks">
+              <a href="/">Writing</a>
+              <a href="/about">About</a>
+              <a href="https://github.com/erenalpaslan">GitHub</a>
+              <a href="https://medium.com/@erenalpaslan97">Medium</a>
+            </nav>
+          </div>
+          <hr class="rule" />
+
+          <h1 class="lead">Notes on Android, Kotlin and the tools around them.</h1>
+          <p class="sub">Mobile engineer. I write when something takes me longer to work out than it should have — coroutines, multiplatform, on-device ML.</p>
+
+          <div class="listhead">
+            <span>Writing</span>
+            <span>{{ count }} posts</span>
+          </div>
+          <hr class="rule" />
+
+          <sc-for list="{{ posts }}" as="post" hint-placeholder-count="3">
+            <div>
+              <a href="{{ post.href }}" class="entry">
+                <div class="entry-meta">
+                  <span>{{ post.date }}</span>
+                  <span class="dot"></span>
+                  <span>{{ post.read }}</span>
+                </div>
+                <h2 class="entry-title">{{ post.title }}</h2>
+                <p class="entry-desc">{{ post.desc }}</p>
+                <div class="entry-foot">
+                  <div class="taglist">
+                    <sc-for list="{{ post.tags }}" as="tag" hint-placeholder-count="3">
+                      <span class="tag tag-outline">{{ tag }}</span>
+                    </sc-for>
+                  </div>
+                  <span class="mirror"><span class="mirror-line"></span>also on Medium</span>
+                </div>
+              </a>
+              <hr class="rule" />
+            </div>
+          </sc-for>
+
+          <div class="foot">
+            <span>© 2026 Eren Alpaslan</span>
+            <nav class="navlinks">
+              <a href="https://github.com/erenalpaslan">GitHub</a>
+              <a href="https://medium.com/@erenalpaslan97">Medium</a>
+              <a href="/rss.xml">RSS</a>
+            </nav>
+          </div>
+
+        </div>
+      </div>
+
+      <script
+        type="text/x-dc"
+        data-dc-script
+        data-props='{}'
+      >
+        class Component extends DCLogic {
+          renderVals() {
+            const posts = [
+              {
+                title: "Image Segmentation in Android",
+                desc: "Making sense of the images our devices capture — separating a subject from its background on-device, with ML Kit and a look at what the model is actually doing.",
+                date: "22 Nov 2023",
+                read: "9 min read",
+                href: "/writing/image-segmentation-in-android",
+                tags: ["android", "machine-learning", "ml-kit"]
+              },
+              {
+                title: "Kotlin Multiplatform: A Guide to Ktor Integration",
+                desc: "Sharing a networking layer across Android and iOS without giving up either platform's idioms — where Ktor fits, and where the seams end up.",
+                date: "13 Nov 2023",
+                read: "7 min read",
+                href: "/writing/kotlin-multiplatform-a-guide-to-ktor-integration",
+                tags: ["kotlin-multiplatform", "ktor", "android"]
+              },
+              {
+                title: "Kotlin Coroutine: Exception Handling",
+                desc: "What a Job actually does when a child fails, why a cancelled parent takes its children with it, and how to stop an exception passing silently.",
+                date: "6 Nov 2023",
+                read: "6 min read",
+                href: "/writing/kotlin-coroutine-exception-handling",
+                tags: ["kotlin", "coroutines", "android"]
+              }
+            ];
+            return { posts: posts, count: posts.length };
+          }
+        }
+      </script>
+    </x-dc>
+  </body>
+</html>

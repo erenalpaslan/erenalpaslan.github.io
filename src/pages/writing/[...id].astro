@@ -1,0 +1,104 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { readingTime, formatDate, category, byNewest } from "../../lib/post";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).sort(byNewest);
+  return posts.map((post, i) => ({
+    params: { id: post.id },
+    props: {
+      post,
+      // Newest first, so the one before is newer and the one after is older.
+      newer: i > 0 ? posts[i - 1] : undefined,
+      older: i < posts.length - 1 ? posts[i + 1] : undefined,
+    },
+  }));
+}
+
+const { post, newer, older } = Astro.props;
+const { Content } = await render(post);
+const kicker = category(post);
+---
+<Base
+  title={`${post.data.title} — Eren Alpaslan`}
+  description={post.data.description}
+>
+  <div class="progress" id="progress"></div>
+  <div class="shell">
+    <Header />
+
+    <a class="back" href="/"><span class="back-arrow"></span>All writing</a>
+
+    <div class="entry-meta">
+      <span>{formatDate(post.data.pubDate)}</span>
+      <span class="dot"></span>
+      <span>{readingTime(post.body)}</span>
+      {kicker && <><span class="dot"></span><span>{kicker}</span></>}
+    </div>
+
+    <h1 class="post-title">{post.data.title}</h1>
+    <p class="post-standfirst">{post.data.description}</p>
+
+    <div class="actionrow">
+      {post.data.mediumUrl && (
+        <a class="btn btn-primary" href={post.data.mediumUrl} target="_blank" rel="noopener">
+          Read on Medium <span class="arrow-ne">&#8599;</span>
+        </a>
+      )}
+      {post.data.mediumUrl ? (
+        <span class="pubnote">
+          <span class="pubdot"></span>
+          Published {formatDate(post.data.pubDate)}{post.data.claps ? ` · ${post.data.claps} claps on Medium` : ""}
+        </span>
+      ) : (
+        <span class="pubnote">
+          <span class="pubdot pubdot-draft"></span>
+          Not mirrored anywhere yet &mdash; reading here is the only way.
+        </span>
+      )}
+    </div>
+    <hr class="rule" />
+
+    <article class="body"><Content /></article>
+
+    <hr class="rule" />
+    {(newer || older) && (
+      <div class="postnav">
+        {newer && (
+          <div class="postnav-item">
+            <span class="postnav-label">Newer</span>
+            <a class="postnav-title" href={`/writing/${newer.id}/`}>{newer.data.title}</a>
+          </div>
+        )}
+        {older && (
+          <div class="postnav-item older">
+            <span class="postnav-label">Older</span>
+            <a class="postnav-title" href={`/writing/${older.id}/`}>{older.data.title}</a>
+          </div>
+        )}
+      </div>
+    )}
+
+    <Footer back />
+  </div>
+
+  <script>
+    // Reading progress, and Escape to leave — both from the approved design.
+    const bar = document.getElementById("progress");
+    const update = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const pct = max > 0 ? Math.min(1, doc.scrollTop / max) : 0;
+      if (bar) bar.style.width = (pct * 100).toFixed(1) + "%";
+    };
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update);
+    update();
+    addEventListener("keydown", (e) => {
+      if (e.key === "Escape") location.href = "/";
+    });
+  </script>
+</Base>

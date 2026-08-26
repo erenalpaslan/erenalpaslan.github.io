@@ -1,0 +1,256 @@
+/* blog.css — this site's layer over Nocturne.
+ *
+ * Transcribed from the approved design at
+ * design/personal-blog/Blog Index.dc.html. Same names, same numbers.
+ * Retuning the look means editing the design and re-transcribing, never
+ * nudging a value here until it looks right.
+ *
+ * Nocturne tokenises space, radius, family and colour but not type size,
+ * so the reading scale is defined here — and only here. */
+
+:root {
+  --t-display: 40px;
+  --t-entry: 25px;
+  --t-lead: 19px;
+  --t-body: 16.5px;
+  --t-meta: 12.5px;
+  --measure: 68ch;
+  --gutter: clamp(var(--space-8), 6vw, 96px);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  margin: 0;
+}
+a { color: var(--color-text); text-decoration: none; }
+a:hover { color: var(--color-accent-300); }
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* The page hugs the left and leaves the air on the right. */
+.shell { max-width: 1180px; padding: 0 var(--gutter); margin: 0 auto; }
+
+/* Nocturne's signature rule: fades out over 48px at each end. */
+.rule {
+  height: 1px; border: 0; margin: 0;
+  background: linear-gradient(90deg, transparent 0, var(--color-divider) 48px,
+    var(--color-divider) calc(100% - 48px), transparent 100%);
+}
+
+.topbar {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--space-8);
+  padding: calc(var(--space-8) * 1.6) 0 calc(var(--space-8) * 1.2);
+  flex-wrap: wrap;
+}
+.brand {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: var(--t-lead); letter-spacing: -0.01em;
+}
+.brand-mark { color: var(--color-accent); }
+.navlinks {
+  display: flex; gap: calc(var(--space-8) * 1.1); font-size: var(--t-meta);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-neutral-500);
+}
+.navlinks a { color: var(--color-neutral-500); }
+.navlinks a:hover { color: var(--color-accent-300); }
+
+/* ── Index ─────────────────────────────────────────────────────────── */
+.lead {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: var(--t-display); line-height: 1.22; letter-spacing: -0.02em;
+  margin: calc(var(--space-8) * 2.6) 0 var(--space-8); max-width: 20ch;
+}
+.sub {
+  font-size: var(--t-lead); line-height: 1.62; color: var(--color-neutral-400);
+  max-width: 54ch; margin: 0 0 calc(var(--space-8) * 2.4);
+}
+.listhead {
+  display: flex; align-items: baseline; justify-content: space-between;
+  font-size: var(--t-meta); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-neutral-600); padding-bottom: var(--space-6);
+}
+.entry { display: block; padding: calc(var(--space-8) * 1.5) 0; cursor: pointer; }
+.entry-meta {
+  display: flex; align-items: center; gap: var(--space-4);
+  font-size: var(--t-meta); color: var(--color-neutral-600);
+  margin-bottom: var(--space-4);
+}
+.dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-neutral-700); }
+.entry-title {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: var(--t-entry); line-height: 1.3; letter-spacing: -0.015em;
+  margin: 0 0 var(--space-4); transition: color 120ms ease;
+}
+.entry:hover .entry-title { color: var(--color-accent-300); }
+.entry-desc {
+  font-size: var(--t-body); line-height: 1.68; color: var(--color-neutral-400);
+  max-width: var(--measure); margin: 0 0 var(--space-6);
+}
+.entry-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-6); flex-wrap: wrap;
+}
+.taglist { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+/* The Medium mirror: a mark, not a badge. */
+.mirror {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: var(--t-meta); color: var(--color-neutral-600);
+}
+.mirror-line { width: 14px; height: 1px; background: var(--color-accent-700); }
+.entry:hover .mirror { color: var(--color-neutral-500); }
+.mirror-draft .mirror-line { background: var(--color-neutral-700); }
+
+.foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-8); flex-wrap: wrap;
+  padding: calc(var(--space-8) * 1.6) 0 calc(var(--space-8) * 2);
+  font-size: var(--t-meta); color: var(--color-neutral-600);
+}
+.foot a:hover { color: var(--color-accent-300); }
+
+/* ── Post ──────────────────────────────────────────────────────────── */
+.progress {
+  position: fixed; top: 0; left: 0; height: 2px; z-index: 5; width: 0;
+  background: var(--color-accent); transition: width 90ms linear;
+}
+.back {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  font-size: var(--t-meta); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-neutral-500); background: none; border: 0; padding: 0;
+  font-family: var(--font-body); cursor: pointer;
+  margin: calc(var(--space-8) * 1.4) 0 calc(var(--space-8) * 1.6);
+}
+.back:hover { color: var(--color-accent-300); }
+.back:focus-visible {
+  outline: 2px solid var(--color-accent); outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+.back-arrow { width: 18px; height: 1px; background: var(--color-accent-700); }
+
+.post-title {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: var(--t-display); line-height: 1.18; letter-spacing: -0.022em;
+  margin: 0 0 var(--space-6); max-width: 26ch;
+}
+.post-standfirst {
+  font-size: var(--t-lead); line-height: 1.62; color: var(--color-neutral-400);
+  max-width: 56ch; margin: 0 0 calc(var(--space-8) * 1.4);
+}
+
+/* Publication state lives in the action row, not in a badge. */
+.actionrow {
+  display: flex; align-items: center; gap: calc(var(--space-8) * 1.1);
+  flex-wrap: wrap; margin-bottom: calc(var(--space-8) * 1.6);
+}
+.pubnote {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  font-size: var(--t-meta); color: var(--color-neutral-600);
+}
+.pubdot { width: 5px; height: 5px; border-radius: 50%; background: var(--color-accent); }
+.pubdot-draft { background: var(--color-neutral-600); }
+.arrow-ne { font-size: 13px; line-height: 1; opacity: 0.85; }
+
+.body { max-width: var(--measure); padding: calc(var(--space-8) * 1.6) 0 0; }
+.body p {
+  font-size: var(--t-body); line-height: 1.78; color: var(--color-neutral-200);
+  margin: 0 0 calc(var(--space-8) * 1.1); text-wrap: pretty;
+}
+.body h2 {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: var(--t-entry); letter-spacing: -0.015em; line-height: 1.3;
+  margin: calc(var(--space-8) * 1.6) 0 var(--space-6);
+}
+.body pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13.5px; line-height: 1.62; color: var(--color-neutral-300);
+  background: var(--color-surface); border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md); padding: var(--space-6);
+  margin: 0 0 calc(var(--space-8) * 1.2); overflow-x: auto;
+}
+
+/* Beyond the design: what markdown produces that the mockup had no
+ * instance of. Each takes its values from the same tokens. */
+.body h3 {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: var(--t-lead); line-height: 1.4; color: var(--color-neutral-200);
+  margin: calc(var(--space-8) * 1.3) 0 var(--space-4);
+}
+.body a { color: var(--color-accent-300); border-bottom: 1px solid var(--color-accent-800); }
+.body a:hover { color: var(--color-accent-200); border-bottom-color: var(--color-accent-600); }
+.body strong { font-weight: 600; color: var(--color-neutral-100); }
+.body ul, .body ol {
+  font-size: var(--t-body); line-height: 1.78; color: var(--color-neutral-200);
+  margin: 0 0 calc(var(--space-8) * 1.1); padding-left: calc(var(--space-8) * 1.1);
+}
+.body li { margin-bottom: var(--space-3); }
+.body blockquote {
+  margin: calc(var(--space-8) * 1.3) 0; padding-left: calc(var(--space-8) * 1.1);
+  border-left: 2px solid var(--color-accent); font-size: var(--t-lead);
+  line-height: 1.6; color: var(--color-neutral-200);
+}
+.body blockquote p { color: inherit; font-size: inherit; margin-bottom: 0; }
+/* Inline code only — :not(pre) keeps this off the highlighted blocks. */
+.body :not(pre) > code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em; color: var(--color-accent-300);
+  background: var(--color-accent-900); padding: 1px var(--space-2);
+  border-radius: var(--radius-sm);
+}
+.body img {
+  max-width: 100%; height: auto; display: block;
+  border-radius: var(--radius-md); margin: calc(var(--space-8) * 1.3) 0;
+}
+.body hr {
+  height: 1px; border: 0; margin: calc(var(--space-8) * 1.4) 0;
+  background: linear-gradient(90deg, transparent 0, var(--color-divider) 48px,
+    var(--color-divider) calc(100% - 48px), transparent 100%);
+}
+
+/* Shiki, resolved through Nocturne's ramps rather than a second palette.
+ * astro.config.mjs sets theme "css-variables", which emits these names. */
+:root {
+  --astro-code-foreground: var(--color-neutral-300);
+  --astro-code-background: var(--color-surface);
+  --astro-code-token-comment: var(--color-neutral-600);
+  --astro-code-token-keyword: var(--color-accent-400);
+  --astro-code-token-string: var(--color-neutral-400);
+  --astro-code-token-string-expression: var(--color-neutral-400);
+  --astro-code-token-constant: var(--color-accent-300);
+  --astro-code-token-function: var(--color-neutral-200);
+  --astro-code-token-parameter: var(--color-neutral-300);
+  --astro-code-token-punctuation: var(--color-neutral-500);
+  --astro-code-token-link: var(--color-accent-300);
+}
+
+.postnav {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--space-8); flex-wrap: wrap; padding: calc(var(--space-8) * 1.6) 0;
+}
+.postnav-label {
+  font-size: var(--t-meta); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-neutral-600); display: block; margin-bottom: var(--space-4);
+}
+.postnav-title {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: var(--t-lead); letter-spacing: -0.012em; max-width: 34ch;
+  background: none; border: 0; padding: 0; color: var(--color-text);
+  text-align: left; cursor: pointer; display: inline-block;
+}
+.postnav-title:hover { color: var(--color-accent-300); }
+.postnav-title:focus-visible {
+  outline: 2px solid var(--color-accent); outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+.postnav-item.older { text-align: right; margin-left: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .progress, .entry-title { transition: none; }
+}

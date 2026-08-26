@@ -1,0 +1,14 @@
+---
+const year = new Date().getFullYear();
+interface Props { back?: boolean }
+const { back = false } = Astro.props;
+---
+<div class="foot">
+  <span>&copy; {year} Eren Alpaslan</span>
+  <nav class="navlinks">
+    {back && <a href="/">All writing</a>}
+    <a href="https://github.com/erenalpaslan">GitHub</a>
+    <a href="https://medium.com/@erenalpaslan97">Medium</a>
+    <a href="/rss.xml">RSS</a>
+  </nav>
+</div>
