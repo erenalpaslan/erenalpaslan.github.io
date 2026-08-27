@@ -4,7 +4,6 @@ description: "Three tools sell the same promise: parse your repository into a gr
 pubDate: 2026-08-26
 tags: ["contextgraph", "codegraph", "graphify", "benchmarks"]
 category: "Comparison"
-draft: true
 ---
 
 Three tools now sell the same promise. Point them at a repository, they parse it into a graph of symbols and edges, and your coding agent queries that graph instead of grepping its way through files one at a time. Graphify, CodeGraph and ContextGraph all describe themselves roughly that way, and all three READMEs are written in the register of a launch.
