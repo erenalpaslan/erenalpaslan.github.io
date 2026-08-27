@@ -1,0 +1,23 @@
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#161826","primaryColor":"#232532","primaryTextColor":"#e9e9ed",
+  "primaryBorderColor":"#9184d9","lineColor":"#6f7186","fontFamily":"Arial",
+  "fontSize":"16px","edgeLabelBackground":"#161826",
+  "clusterBkg":"#161826","clusterBorder":"#3a3c4e","titleColor":"#9184d9"
+}, "flowchart":{"curve":"linear","nodeSpacing":50,"rankSpacing":50,"padding":14}}}%%
+flowchart TD
+    subgraph reached ["FOUND WITH grep — 3 of 6 facts"]
+        A["StaticCanvas.tsx"] -->|calls| B["renderStaticScene()<br/>staticScene.ts"]
+        B -->|per element| C["renderElement()<br/>renderElement.ts:811"]
+    end
+    subgraph missed ["NEVER REACHED — the other three"]
+        E["ShapeCache.generateElementShape()<br/>scene/ShapeCache.ts"]
+        E -.->|cache hit| F["WeakMap&lt;Element, Drawable&gt;"]
+        E -.->|cache empty| G["_generateElementShape()<br/>roughjs"]
+    end
+    C ==>|"one edge, one directory away"| E
+
+    classDef reached fill:#232532,stroke:#9184d9,stroke-width:2px,color:#e9e9ed;
+    classDef missed fill:#1c1e2c,stroke:#4d4f63,stroke-width:1px,color:#7c7e92,stroke-dasharray:5 4;
+    class A,B,C reached;
+    class E,F,G missed;
+    linkStyle 2,3,4 stroke:#4d4f63,stroke-width:1px;
