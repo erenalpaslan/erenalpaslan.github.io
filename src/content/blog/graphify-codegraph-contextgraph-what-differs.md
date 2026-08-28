@@ -249,8 +249,6 @@ instruments is mine.
 
 ### How I would actually choose
 
-![](/images/graphify-codegraph-contextgraph-what-differs/diagrams/how-to-choose.png)
-
 **If your repository is code and you want the graph fresh with no ceremony, take
 CodeGraph.** Its language table is the most detailed of the three about what each
 entry actually yields, it's the only one extracting framework routes or bridging

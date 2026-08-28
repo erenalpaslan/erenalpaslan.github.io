@@ -152,4 +152,7 @@ was merged two days ago; any other title means editing that post too.
 - **Budget: 2,660 stands.** Sections 5 and 6 stay at full length — they are the
   two the edges post delegates here, and the two a reader cannot act on without
   detail. ~12 min read against the 10-minute target.
-- **Diagram:** the decision tree in section 9, keyed on what is in your repo.
+- **Diagram:** the decision tree in section 9 was drawn, then dropped on the
+  author's call. The section carries its three recommendations as prose, which
+  is where the caveats live anyway — a diagram flattens "not measured here" and
+  "costs more to index" into a box nobody reads twice. Banner only.
