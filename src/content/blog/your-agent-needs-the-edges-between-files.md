@@ -190,11 +190,7 @@ question's gold facts, each side scored in its own emission order. Deterministic
 
 Pooled over the 29 headline questions (negative controls excluded):
 
-| Metric | ContextGraph | CodeGraph | `grep` | `ripgrep` |
-|---|---|---|---|---|
-| precision@5 | **20.0%** | 12.4% | 11.0% | 11.0% |
-| recall@10 | **46.0%** | 28.0% | 35.1% | 35.1% |
-| MRR | **0.502** | 0.326 | 0.218 | 0.218 |
+![Pooled over 29 headline questions: precision@5 20.0% for ContextGraph against 12.4% for CodeGraph and 11.0% for both grep and ripgrep; recall@10 46.0% against 28.0% and 35.1%; MRR 0.502 against 0.326 and 0.218](/images/your-agent-needs-the-edges-between-files/tables/retrieval-headline.png)
 
 A pooled mean is not a verdict, so here are the rows it loses — on that same
 pool, sliced by repository, which is the only comparison where the denominators
