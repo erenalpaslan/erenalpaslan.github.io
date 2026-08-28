@@ -66,11 +66,7 @@ question in one call.
 This is where the three separate first, and for most people it decides the choice
 before any of the rest matters.
 
-| | Code | Everything else |
-|---|---|---|
-| **CodeGraph** | 34 languages, 20 in a compiled Rust kernel — including COBOL, Erlang, Solidity, Terraform, Nix, VB.NET, ArkTS | Nothing. Code only. |
-| **Graphify** | ~40 languages by its own README — Zig, Julia, Fortran, Elixir, Groovy, PowerShell, SystemVerilog among them | Markdown, reStructuredText, HTML, `.docx`, `.xlsx`, PDFs, images, MP4/MOV/MP3/WAV, YouTube URLs, MCP configs, package manifests |
-| **ContextGraph** | 9 — Kotlin, Java, TypeScript, TSX, JavaScript, Python, Swift, Objective-C, Go | Markdown, PDF, SQL schemas, config files, in the same graph as the code |
+![What each tool extracts: CodeGraph, 34 code languages and nothing else; Graphify, ~40 languages plus docs, media and manifests; ContextGraph, 9 languages plus Markdown, PDF, SQL schemas and config files](/images/graphify-codegraph-contextgraph-what-differs/tables/what-each-reads.png)
 
 Neither language table contains the other, so "widest" depends on your stack. But
 the shape of the difference is clear: ContextGraph's nine is by some distance the
